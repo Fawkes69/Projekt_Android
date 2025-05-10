@@ -2,16 +2,17 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
+    alias(libs.plugins.compose.compiler) apply true
 }
 
 android {
     namespace = "com.example.projekt_51731"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.projekt_51731"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -52,7 +53,7 @@ android {
 
 dependencies {
     implementation(libs.androidx.runtime.livedata)
-    val room_version = "2.6.1"
+    val room_version = "2.7.1"
     implementation("androidx.room:room-runtime:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
     implementation(libs.androidx.core.ktx)
@@ -70,8 +71,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
-    val nav_version = "2.8.8"
+    val nav_version = "2.8.9"
 
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
