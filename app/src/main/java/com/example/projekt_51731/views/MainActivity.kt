@@ -38,13 +38,13 @@ class MainActivity : ComponentActivity() {
             if (isLoggedIn != null) {
                 NavHost(
                     navController = navController,
-                    startDestination = if (isLoggedIn == true) Routes.homepage else Routes.loginPage
+                    startDestination = if (isLoggedIn == true) Routes.homepage else Routes.registerPage
                 ) {
                     composable(route = Routes.loginPage) {
                         LoginPage(navController, context)
                     }
                     composable(route = Routes.registerPage) {
-                        RegisterPage(navController)
+                        RegisterPage(navController, context)
                     }
                     composable(route = Routes.homepage) {
                         HomePage(navController, context)
