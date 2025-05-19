@@ -13,7 +13,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Person
@@ -55,7 +57,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun LoginPage(navController: NavController, context: MainActivity){
+fun LoginPage(navController: NavController){
     val imageLog = painterResource(R.drawable.logo)
     val xImage = painterResource(R.drawable.x)
     val inImage = painterResource(R.drawable.`in`)
@@ -67,12 +69,14 @@ fun LoginPage(navController: NavController, context: MainActivity){
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
     val context = LocalContext.current
+    val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .fillMaxWidth()
+            .verticalScroll(scrollState)
             .padding(horizontal = 24.dp, vertical = 16.dp),
         horizontalAlignment = Alignment.Start,
         )
@@ -204,7 +208,7 @@ fun LoginPage(navController: NavController, context: MainActivity){
                 contentDescription = null)
         }
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(14.dp))
 
         Row(
             modifier = Modifier.fillMaxWidth(),

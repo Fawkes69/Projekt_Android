@@ -25,7 +25,7 @@ import com.example.projekt_51731.vievmodel.TodoViewModel
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val todoViewModel = ViewModelProvider(this)[TodoViewModel::class.java]
+        ViewModelProvider(this)[TodoViewModel::class.java]
 
         setContent {
             TodoAppTheme {
@@ -42,16 +42,16 @@ class MainActivity : ComponentActivity() {
                         startDestination = if (isLoggedIn == true) Routes.homepage else Routes.loginPage
                     ) {
                         composable(route = Routes.loginPage) {
-                            LoginPage(navController, this@MainActivity)
+                            LoginPage(navController)
                         }
                         composable(route = Routes.registerPage) {
-                            RegisterPage(navController, this@MainActivity)
+                            RegisterPage(navController)
                         }
                         composable(route = Routes.homepage) {
-                            HomePage(navController, this@MainActivity)
+                            HomePage(navController)
                         }
                         composable(route = Routes.databasePage) {
-                            TodoListPage(todoViewModel, navController, this@MainActivity)
+                            TodoListPage(navController)
                         }
                     }
                 } else {

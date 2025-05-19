@@ -30,7 +30,7 @@ import com.example.projekt_51731.utilis.Routes
 
 
 @Composable
-fun RegisterPage(navController: NavController, context: MainActivity) {
+fun RegisterPage(navController: NavController) {
     var fullName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }

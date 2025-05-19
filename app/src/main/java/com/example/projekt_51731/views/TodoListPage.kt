@@ -40,7 +40,6 @@ import androidx.navigation.NavController
 import com.example.projekt_51731.R
 import com.example.projekt_51731.model.Todo
 import com.example.projekt_51731.utilis.Routes
-import com.example.projekt_51731.vievmodel.TodoViewModel
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -49,7 +48,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TodoListPage(viewModel: TodoViewModel, navController: NavController, activity: MainActivity) {
+fun TodoListPage(navController: NavController) {
     val db = Firebase.firestore
 
     var title by remember { mutableStateOf("") }
@@ -78,11 +77,12 @@ fun TodoListPage(viewModel: TodoViewModel, navController: NavController, activit
             .padding(16.dp)
     ) {
         Text(
-        text = "Powróć do ekranu home",
+        text = "Kliknij tutaj by powrócić do ekranu home",
         color = colorResource(id = R.color.black),
         modifier = Modifier
             .clickable { navController.navigate(Routes.homepage) },
     )
+        Spacer(modifier = Modifier.height(14.dp))
         Row(modifier = Modifier.fillMaxWidth()) {
             OutlinedTextField(
                 value = title,
@@ -111,7 +111,6 @@ fun TodoListPage(viewModel: TodoViewModel, navController: NavController, activit
         Button(
             onClick = {
                 if (editingTask != null) {
-                    // update existing
                     db.collection("tasks").document(editingTask!!.id.toString())
                         .set(hashMapOf(
                             "title" to title,
@@ -120,7 +119,6 @@ fun TodoListPage(viewModel: TodoViewModel, navController: NavController, activit
                         ))
                     editingTask = null
                 } else {
-                    // add new
                     db.collection("tasks").add(
                         hashMapOf(
                             "title" to title,
