@@ -15,7 +15,7 @@ class MainApplication : Application() {
         todoDatabase = Room.databaseBuilder(
             applicationContext,
             TodoDatabase::class.java,
-            TodoDatabase.NAME
+            toString()
         ).build()
     }
 

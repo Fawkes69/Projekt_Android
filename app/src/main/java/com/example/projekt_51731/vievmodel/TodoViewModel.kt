@@ -1,35 +1,35 @@
 package com.example.projekt_51731.vievmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.projekt_51731.MainApplication
+import com.example.projekt_51731.db.TodoDatabase
+import com.example.projekt_51731.db.TodoRepository
 import com.example.projekt_51731.model.Todo
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.time.Instant
-import java.util.Date
 
-class TodoViewModel : ViewModel() {
+class TodoViewModel(application: Application) : AndroidViewModel(application) {
+    private val repo: TodoRepository
+    val todoList: LiveData<List<Todo>>
 
-    val todoDao = MainApplication.todoDatabase.getTodoDao()
-
-    val todoList : LiveData<List<Todo>> = todoDao.getAllTodo()
-
-    fun addTodo(title : String){
-
-        viewModelScope.launch(Dispatchers.IO) {
-            todoDao.addTodo(Todo(title = title, createdAt = Date.from(Instant.now())))
-        }
-
+    init {
+        val dao = TodoDatabase.getDatabase(application).todoDao()
+        repo = TodoRepository(dao)
+        todoList = repo.allTodos
     }
 
-    fun deleteTodo(id : Int){
-
-        viewModelScope.launch(Dispatchers.IO) {
-            todoDao.deleteTodo(id)
+    fun addTodo(title: String, description: String) = viewModelScope.launch {
+        if (title.isNotBlank() || description.isNotBlank()) {
+            repo.add(Todo(id = "", title = title, description = description))
         }
-
     }
 
+    fun updateTodo(todo: Todo) = viewModelScope.launch {
+        repo.update(todo.copy(modifiedAt = System.currentTimeMillis()))
+    }
+
+    fun deleteTodo(todo: Todo) = viewModelScope.launch {
+        repo.delete(todo)
+    }
 }

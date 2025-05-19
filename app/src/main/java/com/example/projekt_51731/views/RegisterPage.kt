@@ -1,5 +1,7 @@
 package com.example.projekt_51731.views
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -14,7 +16,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -24,6 +28,7 @@ import androidx.navigation.NavController
 import com.example.projekt_51731.R
 import com.example.projekt_51731.utilis.Routes
 
+
 @Composable
 fun RegisterPage(navController: NavController, context: MainActivity) {
     var fullName by remember { mutableStateOf("") }
@@ -32,6 +37,20 @@ fun RegisterPage(navController: NavController, context: MainActivity) {
     var confirmPassword by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     var confirmPasswordVisible by remember { mutableStateOf(false) }
+    val imageElipse= painterResource(R.drawable.ellipse)
+
+    Box(modifier = Modifier.fillMaxWidth(),
+    ) {
+        Image(
+            painter = imageElipse,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(129.dp)
+                .align(Alignment.TopEnd)
+
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -40,6 +59,7 @@ fun RegisterPage(navController: NavController, context: MainActivity) {
         horizontalAlignment = Alignment.Start,
 
     ) {
+
         Button( modifier = Modifier,
             colors = ButtonDefaults.buttonColors(containerColor = Color.White),
             onClick = { navController.navigate(Routes.loginPage) }
@@ -115,7 +135,7 @@ fun RegisterPage(navController: NavController, context: MainActivity) {
                 )
             },
             trailingIcon = {
-                val image = if (passwordVisible) Icons.Outlined.Visibility else Icons.Outlined.VisibilityOff
+                val image = if (passwordVisible) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(
                         imageVector = image,
@@ -147,7 +167,7 @@ fun RegisterPage(navController: NavController, context: MainActivity) {
                 )
             },
             trailingIcon = {
-                val image = if (confirmPasswordVisible) Icons.Outlined.Visibility else Icons.Outlined.VisibilityOff
+                val image = if (confirmPasswordVisible) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility
                 IconButton(onClick = { confirmPasswordVisible = !confirmPasswordVisible }) {
                     Icon(
                         imageVector = image,
@@ -171,7 +191,7 @@ fun RegisterPage(navController: NavController, context: MainActivity) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.purple_69)),
+            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.pink_69)),
             shape = MaterialTheme.shapes.medium,
             onClick = {
             }
@@ -184,10 +204,16 @@ fun RegisterPage(navController: NavController, context: MainActivity) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            Text(text = "Already have an account?", color = Color.Gray)
-            TextButton(onClick = { navController.navigate(Routes.loginPage) }) {
-                Text(text = "Sign In", color = colorResource(id = R.color.purple_69))
+            Text(text = "Already have an account? ", color = Color.Gray)
+            Text(
+                text = " Sign In",
+                color = colorResource(id = R.color.purple_69),
+                modifier = Modifier
+                    .clickable { navController.navigate(Routes.loginPage) },
+
+                )
+
+        }
             }
         }
-    }
-}
+
